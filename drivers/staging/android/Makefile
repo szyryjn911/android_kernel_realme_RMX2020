@@ -15,3 +15,8 @@ obj-$(CONFIG_OPPO_HANS) += hans_netfilter.o
 #Huacai.Zhou@PSW.BSP.kernel.Peformance, 2018/06/18, add foreground process opt support
 obj-y   += oppo_ion/
 #endif /* VENDOR_EDIT */
+obj-$(CONFIG_ANDROID_LOW_MEMORY_KILLER) += lowmemorykiller.o
+lmk_tng-y := lowmemorykiller_tng.o lowmemorykiller_tasks.o \
+             lowmemorykiller_oom.o lowmemorykiller_vmpressure.o
+obj-$(CONFIG_ANDROID_LOW_MEMORY_KILLER_TNG) += lmk_tng.o
+obj-$(CONFIG_ANDROID_LOW_MEMORY_KILLER_STATS) += lowmemorykiller_stats.o

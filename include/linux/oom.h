@@ -103,6 +103,9 @@ extern unsigned long oom_badness(struct task_struct *p,
 		unsigned long totalpages);
 
 extern bool out_of_memory(struct oom_control *oc);
+#ifdef CONFIG_MMU
+extern void wake_oom_reaper(struct task_struct *tsk);
+#endif
 
 extern void exit_oom_victim(void);
 

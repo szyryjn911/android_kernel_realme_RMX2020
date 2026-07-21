@@ -8,6 +8,7 @@
 #include <linux/sched/numa_balancing.h>
 #include <linux/tracepoint.h>
 #include <linux/binfmts.h>
+#include <linux/kthread.h>
 
 #ifdef CONFIG_MTK_SCHED_TRACERS
 /* M: states for tracking I/O & mutex events

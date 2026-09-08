@@ -1479,6 +1479,12 @@ enum nl80211_commands {
  *	(a u32 with flags from &enum nl80211_wpa_versions).
  * @NL80211_ATTR_AKM_SUITES: Used with CONNECT, ASSOCIATE, and NEW_BEACON to
  *	indicate which key management algorithm(s) to use (an array of u32).
+ *	This attribute is also sent in response to @NL80211_CMD_GET_WIPHY,
+ *	indicating the supported AKM suites, intended for specific drivers which
+ *	implement SME and have constraints on which AKMs are supported and also
+ *	the cases where an AKM support is offloaded to the driver/firmware.
+ *	If there is no such notification from the driver, user space should
+ *	assume the driver supports all the AKM suites.
  *
  * @NL80211_ATTR_REQ_IE: (Re)association request information elements as
  *	sent out by the card, for ROAM and successful CONNECT events.
@@ -2176,6 +2182,13 @@ enum nl80211_commands {
  *     authentication processing to user space if this capability is indicated
  *     in NL80211_CMD_CONNECT requests from the user space.
  *
+ * @NL80211_ATTR_IFTYPE_AKM_SUITES: nested array attribute, with each entry
+ *	using attributes from &enum nl80211_iftype_akm_attributes. This
+ *	attribute is sent in a response to %NL80211_CMD_GET_WIPHY indicating
+ *	supported AKM suites capability per interface. AKMs advertised in
+ *	%NL80211_ATTR_AKM_SUITES are default capabilities if AKM suites not
+ *	advertised for a specific interface type.
+ *
  * @NUM_NL80211_ATTR: total number of nl80211_attrs available
  * @NL80211_ATTR_MAX: highest attribute number currently defined
  * @__NL80211_ATTR_AFTER_LAST: internal use
@@ -2604,6 +2617,8 @@ enum nl80211_attrs {
 
 	NL80211_ATTR_EXTERNAL_AUTH_ACTION,
 	NL80211_ATTR_EXTERNAL_AUTH_SUPPORT,
+
+	NL80211_ATTR_IFTYPE_AKM_SUITES,
 
 	/* add attributes here, update the policy in nl80211.c */
 
@@ -3999,6 +4014,7 @@ enum nl80211_mfp {
 enum nl80211_wpa_versions {
 	NL80211_WPA_VERSION_1 = 1 << 0,
 	NL80211_WPA_VERSION_2 = 1 << 1,
+	NL80211_WPA_VERSION_3 = 1 << 2,
 };
 
 /**
@@ -5469,6 +5485,30 @@ enum nl80211_nan_match_attributes {
 enum nl80211_external_auth_action {
 	NL80211_EXTERNAL_AUTH_START,
 	NL80211_EXTERNAL_AUTH_ABORT,
+};
+
+/**
+ * enum nl80211_iftype_akm_attributes - interface type AKM attributes
+ * @__NL80211_IFTYPE_AKM_ATTR_INVALID: Invalid
+ *
+ * @NL80211_IFTYPE_AKM_ATTR_IFTYPES: nested attribute containing a flag
+ *	attribute for each interface type that supports AKM suites specified in
+ *	%NL80211_IFTYPE_AKM_ATTR_SUITES
+ * @NL80211_IFTYPE_AKM_ATTR_SUITES: an array of u32. Used to indicate supported
+ *	AKM suites for the specified interface types.
+ *
+ * @__NL80211_IFTYPE_AKM_ATTR_LAST: Internal
+ * @NL80211_IFTYPE_AKM_ATTR_MAX: highest interface type AKM attribute.
+ */
+enum nl80211_iftype_akm_attributes {
+	__NL80211_IFTYPE_AKM_ATTR_INVALID,
+
+	NL80211_IFTYPE_AKM_ATTR_IFTYPES,
+	NL80211_IFTYPE_AKM_ATTR_SUITES,
+
+	/* keep last */
+	__NL80211_IFTYPE_AKM_ATTR_LAST,
+	NL80211_IFTYPE_AKM_ATTR_MAX = __NL80211_IFTYPE_AKM_ATTR_LAST - 1,
 };
 
 #endif /* __LINUX_NL80211_H */

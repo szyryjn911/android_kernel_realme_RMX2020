@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 4.14.336 Kernel Configuration
+# Linux/arm64 4.14.357 Kernel Configuration
 #
 CONFIG_ARM64=y
 CONFIG_64BIT=y
@@ -1913,9 +1913,6 @@ CONFIG_MTK_PERFMGR_TOUCH_BOOST=y
 # CONFIG_MTK_PERF_OBSERVER is not set
 # CONFIG_MTK_RESYM is not set
 # CONFIG_MTK_FPSGO_V3 is not set
-CONFIG_MTK_EARA_THERMAL=y
-# CONFIG_MTK_EARA_AI is not set
-# CONFIG_MTK_GBE is not set
 # CONFIG_MTK_USB2JTAG_SUPPORT is not set
 CONFIG_MTK_CQDMA=y
 
